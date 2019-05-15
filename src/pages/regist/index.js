@@ -131,7 +131,7 @@ class RegistrationForm extends Component {
               注册
             </Button>
           </Form.Item>
-          <p><a href="javascript:void(0)" onClick={this.jumpToLogin}>已有账号，立即登录</a></p>
+          <p className={styles['to-login']}><a href="javascript:void(0)" onClick={this.jumpToLogin}>已有账号，立即登录</a></p>
         </Form>
       </div>
     );

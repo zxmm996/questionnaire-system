@@ -1,7 +1,7 @@
 import createStore from "unistore";
 import { Provider, connect } from "unistore/react";
 import Cookies from 'js-cookie';
-
+import config from './config';
 
 let userInfo = null;
 try {
@@ -11,6 +11,7 @@ try {
 const defaultStore = {
   isLogin: false,
   userInfo: {},
+  serviceUrl: config.serviceUrl,
   ...userInfo,
 };
 let store = createStore(defaultStore);
@@ -36,7 +37,11 @@ let actions = store => ({
     };
   },
   logout(state) {
-    return { isLogin: false };
+    Cookies.remove('userInfo');
+    return {
+      isLogin: false,
+      userInfo: {},
+    };
   },
   
   // The above example as an Arrow Function:

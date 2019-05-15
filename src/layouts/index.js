@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import { Provider, connect } from "unistore/react";
+import { Provider } from "unistore/react";
 import styles from './index.css';
 import { store } from '../service/store';
+import Header from './header'
+import Footer from './footer'
 
 function BasicLayout(props) {
-  console.log('props=', props);
   const pathname = props.location.pathname;
- 
-  if (pathname === '/login' || pathname === '/regist') {
+  // 登录页 注册页 填写问卷调查页 不需要登录访问 不需要layout
+  if (pathname === '/login' || pathname === '/regist' || pathname.indexOf('/fill/') > -1) {
     return (
       <Provider store={store}>
         <div className={styles.normal}>
@@ -17,46 +18,33 @@ function BasicLayout(props) {
     );
   } else {
     return (
-      <Layout {...props}/>
+      <LoginedLayout {...props}/>
     );
   }
 }
 
-class Layout extends Component {
+class LoginedLayout extends Component {
   constructor(props) {
     super(props);
     const state = store.getState();
-    console.log('state=', state);
+    // 未登录直接跳转到登录页
     if (!state.isLogin) {
       props.history.push('/login');
     }
-  }
-  componentDidMount() {
   }
   render() {
     return (
       <Provider store={store}>
         <div className={styles.normal}>
-          <div>header</div>
-          {this.props.children}
-          <div>footer</div>
+          <Header {...this.props}/>
+          <div className={styles.content}>
+            {this.props.children}
+          </div>
+          <Footer />
         </div>
       </Provider>
     );
   }
 }
 
-// const App = connect(state => {console.log('state=', state); return state}, actions)(({ count, increment }) => (
-//   <div>
-//     <p>Count: {count}</p>
-//     <button onClick={increment}>Increment</button>
-//   </div>
-// ));
-
-// render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>,
-//   root
-// );
 export default BasicLayout;
