@@ -1,6 +1,7 @@
 
 .normal {
   font-family: Georgia, sans-serif;
+  background-color: #efefef;
 }
 
 .title {
@@ -17,4 +18,5 @@
   min-height: calc(100vh - 110px);
   width: 1200px;
   margin: 0 auto;
+  background-color: #fff;
 }

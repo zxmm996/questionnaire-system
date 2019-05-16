@@ -1,11 +1,52 @@
 .normal {
   display: flex;
+  min-height: 500px;
+  height: calc(100vh - 110px);
   .left {
     width: 200px;
     border-right: 1px solid #ccc;
-    height: 100%;
+
+    p {
+      margin: 0;
+    }
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+      height: 40px;
+      line-height: 40px;
+      text-indent: 30px;
+    }
+    .item {
+      cursor: pointer;
+      height: 40px;
+      line-height: 40px;
+      text-indent: 50px;
+      &:hover {
+        background-color: #e6f7ff;
+        color: #1890ff;
+        border-right: 3px solid #1890ff;
+        margin-right: -1px;
+      }
+    }
   }
   .right {
     width: 1000px;
+    overflow: auto;
+    .title {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .paragraph {
+      display: inline-block;
+    }
+    .desc {
+      .options {
+        .delete {
+          cursor: pointer;
+          color: #1890ff;
+          margin-left: 5px;
+        }
+      }
+    }
   }
 }

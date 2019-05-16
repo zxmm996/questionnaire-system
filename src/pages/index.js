@@ -1,25 +1,12 @@
 import React, { Component } from 'react';
-import { Button, List, Card, message, Popconfirm } from 'antd';
+import { Button, List, Card, Popconfirm, Typography } from 'antd';
 import { connect } from "unistore/react";
-import Clipboard from 'clipboard';
 import { actions } from '../service/store';
 import styles from './index.less';
 
+const { Paragraph } = Typography;
 
 class HomePage extends Component {
-  // 组件挂载完成
-  componentDidMount() {
-    this.clipboard = new Clipboard('.btn');
-
-    this.clipboard.on('success', function(e) {
-      message.success('复制成功');
-    });
-  }
-
-  // 组件将要卸载
-  componentWillUnmount() {
-    this.clipboard.destroy();
-  }
 
   // 跳转到创建页面
   jumpToCreate = () => {
@@ -40,10 +27,8 @@ class HomePage extends Component {
       title: '问卷调查3',
     }]
     const getBtnActions = (item) => {
-      const shareUrl = `${serviceUrl}/fill/${item.id}`;
       return [
         <a herf="javascript:void(0)">分析&下载</a>,
-        <a herf="javascript:void(0)" data-clipboard-text={shareUrl} className="btn">复制</a>,
         <Popconfirm
           title="确认删除?"
           onConfirm={() => {}}
@@ -71,7 +56,7 @@ class HomePage extends Component {
                     description={(
                       <div className={styles.desc}>
                         <div><span className={styles.field}>ID: </span>10010</div>
-                        <div><span className={styles.field}>发布地址:</span>{serviceUrl}/fill/{item.id}</div>
+                        <div><Paragraph copyable={{ text: `${serviceUrl}/fill/${item.id}` }}><span className={styles.field}>发布地址:</span>{serviceUrl}/fill/{item.id}</Paragraph></div>
                       </div>
                     )}
                     />

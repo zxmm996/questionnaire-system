@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { LocaleProvider } from 'antd';
+import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import { Provider } from "unistore/react";
 import styles from './index.css';
 import { store } from '../service/store';
@@ -34,15 +36,17 @@ class LoginedLayout extends Component {
   }
   render() {
     return (
-      <Provider store={store}>
-        <div className={styles.normal}>
-          <Header {...this.props}/>
-          <div className={styles.content}>
-            {this.props.children}
+      <LocaleProvider locale={zh_CN}>
+        <Provider store={store}>
+          <div className={styles.normal}>
+            <Header {...this.props}/>
+            <div className={styles.content}>
+              {this.props.children}
+            </div>
+            <Footer />
           </div>
-          <Footer />
-        </div>
-      </Provider>
+        </Provider>
+      </LocaleProvider>
     );
   }
 }

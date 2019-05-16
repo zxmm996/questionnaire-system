@@ -1,5 +1,4 @@
 import createStore from "unistore";
-import { Provider, connect } from "unistore/react";
 import Cookies from 'js-cookie';
 import config from './config';
 
@@ -17,7 +16,6 @@ const defaultStore = {
 let store = createStore(defaultStore);
 
 let actions = store => ({
-  // Actions can just return a state update:
   // 登录
   login(state, callback) {
     Cookies.set('userInfo', {
@@ -26,7 +24,7 @@ let actions = store => ({
         userName: 'admin',
         id: 10010,
       },
-    })
+    }, 1)
     callback();
     return {
       isLogin: true,
@@ -36,6 +34,7 @@ let actions = store => ({
       },
     };
   },
+  // 退出
   logout(state) {
     Cookies.remove('userInfo');
     return {
@@ -59,16 +58,3 @@ export {
   store,
   actions,
 }
-// const App = connect(state => {console.log('state=', state); return state}, actions)(({ count, increment }) => (
-//   <div>
-//     <p>Count: {count}</p>
-//     <button onClick={increment}>Increment</button>
-//   </div>
-// ));
-
-// render(
-//   <Provider store={store}>
-//     <App />
-//   </Provider>,
-//   root
-// );
