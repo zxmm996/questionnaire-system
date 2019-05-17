@@ -1,5 +1,5 @@
 import React, {Component } from 'react';
-import { Card, List, Typography, Radio, Checkbox, Input, Icon, Button } from 'antd';
+import { Card, List, Typography, Radio, Checkbox, Input, Icon, Button, Tooltip } from 'antd';
 import { connect } from "unistore/react";
 import { actions } from '../../service/store';
 import styles from './index.less';
@@ -182,8 +182,8 @@ class Create extends Component {
           <p className={styles.item} onClick={() => this.renderTemplate(1)}>模板2</p>
         </div>
         <div className={styles.right}>
-          <Title level={2} style={{textAlign: 'center'}}>
-            <Paragraph editable={{ onChange: this.changeFormTitle }}>{formTitle}</Paragraph>
+          <Title level={4} style={{textAlign: 'center'}}>
+            <Paragraph style={{marginLeft: 10}} editable={{ onChange: this.changeFormTitle }}>{formTitle}</Paragraph>
           </Title>
           <Card>
             <List
@@ -213,7 +213,9 @@ class Create extends Component {
                                 }
                                 &nbsp;&nbsp;
                                 <Paragraph className={styles.paragraph} editable={{ onChange: (value) =>  this.changeOption(value, formIndex, optionIndex)  }}>{option.value}</Paragraph>
-                                <Icon type="delete" className={styles.delete} title="删除" onClick={() => this.deleteOption(formIndex, optionIndex)} />
+                                <Tooltip placement="top" title="删除">
+                                  <Icon type="delete" className={styles.delete} onClick={() => this.deleteOption(formIndex, optionIndex)} />
+                                </Tooltip>
                               </div>
                             );
                           })
