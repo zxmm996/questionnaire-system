@@ -6,7 +6,7 @@ import styles from './index.less';
 
 const { Paragraph, Title } = Typography;
 
-class Create extends Component {
+class CreatePage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -239,5 +239,5 @@ class Create extends Component {
 }
 
 export default connect(state => state, actions)((state) => (
-  <Create {...state}/>  
+  <CreatePage {...state}/>  
 ));
