@@ -53,7 +53,7 @@ class FillPage extends Component {
                 <List.Item.Meta
                   title={(
                     <div className={styles.title}>
-                      {formIndex + 1}. {item.title}
+                      <span className={styles.red}>*</span> {formIndex + 1}. {item.title}
                     </div>
                   )}
                   description={(

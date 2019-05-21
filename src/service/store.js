@@ -17,21 +17,14 @@ let store = createStore(defaultStore);
 
 let actions = store => ({
   // 登录
-  login(state, callback) {
+  loginSuccess(state, userInfo) {
     Cookies.set('userInfo', {
       isLogin: true,
-      userInfo: {
-        userName: 'admin',
-        id: 10010,
-      },
+      userInfo,
     }, 1)
-    callback();
     return {
       isLogin: true,
-      userInfo: {
-        userName: 'admin',
-        id: 10010,
-      },
+      userInfo,
     };
   },
   // 退出

@@ -14,6 +14,7 @@ class CreatePage extends Component {
       formList: [],
     };
   }
+
   //  添加表单项
   addForm = (type) => {
     const { formList } = this.state;
@@ -190,7 +191,7 @@ class CreatePage extends Component {
               itemLayout="horizontal"
               dataSource={formList}
               renderItem={(item, formIndex) => (
-                <List.Item actions={[<a herf="javascript:void(0)" onClick={() => this.deleteItem(formIndex)}>删除</a>]}>
+                <List.Item actions={[<span className="link" onClick={() => this.deleteItem(formIndex)}>删除</span>]}>
                   <List.Item.Meta
                     title={(
                       <div className={styles.title}>

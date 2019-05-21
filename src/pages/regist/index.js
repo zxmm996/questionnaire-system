@@ -9,6 +9,7 @@ class RegistrationForm extends Component {
     confirmDirty: false,
   };
 
+  // 注册
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFieldsAndScroll((err, values) => {
@@ -26,7 +27,7 @@ class RegistrationForm extends Component {
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
-      callback('Two passwords that you enter is inconsistent!');
+      callback('两次密码输入不一致!');
     } else {
       callback();
     }
@@ -131,7 +132,7 @@ class RegistrationForm extends Component {
               注册
             </Button>
           </Form.Item>
-          <p className={styles['to-login']}><a href="javascript:void(0)" onClick={this.jumpToLogin}>已有账号，立即登录</a></p>
+          <p className={styles['to-login']}><span className="link" onClick={this.jumpToLogin}>已有账号，立即登录</span></p>
         </Form>
       </div>
     );

@@ -14,6 +14,12 @@ class HomePage extends Component {
     history.push('/create');
   }
 
+  // 跳转到分析页面
+  jumpToReport = (id) => {
+    const { history } = this.props;
+    history.push(`/report/${id}`);
+  }
+
   render() {
     const serviceUrl = this.props.serviceUrl;
     const data = [{
@@ -28,14 +34,14 @@ class HomePage extends Component {
     }]
     const getBtnActions = (item) => {
       return [
-        <a herf="javascript:void(0)">分析&下载</a>,
+        <span className="link" onClick={() => this.jumpToReport(item.id)}>分析&下载</span>,
         <Popconfirm
           title="确认删除?"
           onConfirm={() => {}}
           okText="是"
           cancelText="否"
         >
-          <a herf="javascript:void(0)">删除</a>
+          <span className="link">删除</span>
         </Popconfirm>
       ];
     }

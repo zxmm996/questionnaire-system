@@ -35,11 +35,12 @@ class LoginedLayout extends Component {
     }
   }
   render() {
+    const state = store.getState();
     return (
       <LocaleProvider locale={zh_CN}>
         <Provider store={store}>
           <div className={styles.normal}>
-            <Header {...this.props}/>
+            <Header {...this.props} {...state}/>
             <div className={styles.content}>
               {this.props.children}
             </div>

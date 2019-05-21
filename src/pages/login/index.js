@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from "unistore/react";
 import { Form, Icon, Input, Button } from 'antd';
-import { actions } from '../../service/store';
+import { actions } from '@/service/store';
+import apis from '@/service/api';
 import styles from './index.less';
 
 class NormalLoginForm extends Component {
@@ -10,12 +11,12 @@ class NormalLoginForm extends Component {
   handleSubmit = e => {
     e.preventDefault();
     // 表单值校验
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async (err, values) => {
       if (!err) {
-        const { login, history } = this.props;
-        login(() => {
-          history.push('/');
-        });
+        const res = await apis.login(values)
+        const { loginSuccess, history } = this.props;
+        loginSuccess(res);
+        history.push('/');
       }
     });
   };
@@ -33,7 +34,7 @@ class NormalLoginForm extends Component {
         <Form onSubmit={this.handleSubmit} className={styles['login-form']}>
           <p className={styles.title}>问卷调查系统</p>
           <Form.Item>
-            {getFieldDecorator('username', {
+            {getFieldDecorator('userName', {
               rules: [{ required: true, message: '请输入用户名' }],
             })(
               <Input
@@ -54,9 +55,9 @@ class NormalLoginForm extends Component {
             )}
           </Form.Item>
           <Form.Item>
-            <a className={styles['login-form-forgot']} onClick={this.jumpToRegist} href="javascript:void(0)">
+            <span className={`${styles['login-form-forgot']} link`} onClick={this.jumpToRegist}>
               注册
-            </a>
+            </span>
             <Button type="primary" htmlType="submit" className={styles['login-form-button']}>
               登录
             </Button>
