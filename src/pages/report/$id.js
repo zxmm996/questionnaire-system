@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Progress, Table } from 'antd';
+import { List, Progress, Table, Icon, Tooltip } from 'antd';
 import { connect } from "unistore/react";
 import { actions } from '../../service/store';
 import styles from './index.less';
@@ -45,7 +45,10 @@ class ReportPage extends Component {
       <div className={styles.wrapper}>
         <div className={styles.header} />
         <div className={styles.content}>
-          <p className={styles['form-title']}>{formTitle}</p>
+          <p className={styles['form-title']}>
+            {formTitle}
+            <Tooltip placement="top" title="下载Excel"><Icon type="download" className={styles.download} /></Tooltip>
+          </p>
           <List
             style={{padding: '10px 50px'}}
             itemLayout="horizontal"
