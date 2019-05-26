@@ -21,7 +21,7 @@ class Header extends Component {
 
   render() {
     const { userInfo = {}} = this.props;
-    const userName = userInfo.userName;
+    const account = userInfo.account;
 
     return (
       <div className={styles.normal}>
@@ -29,7 +29,7 @@ class Header extends Component {
           <div className={styles.logo}>问卷调查系统</div>
           <div className={styles.menu}>
             <span className={styles.item} onClick={this.jumpToHome}><Icon type="home" style={{fontSize: 20}} /> 我的问卷</span>
-            <span className={styles.item}><Icon type="user" style={{fontSize: 20}} /> {userName}</span>
+            <span className={styles.item}><Icon type="user" style={{fontSize: 20}} /> {account}</span>
             <span className={styles.item} onClick={this.logout}><Icon type="poweroff" style={{fontSize: 20}} /> 退出</span>
           </div>
         </div>
@@ -39,5 +39,5 @@ class Header extends Component {
 }
 
 export default connect(state => state, actions)((state) => (
-  <Header {...state}/>  
+  <Header {...state}/>
 ));

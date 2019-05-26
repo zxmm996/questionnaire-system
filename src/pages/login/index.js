@@ -14,9 +14,11 @@ class NormalLoginForm extends Component {
     this.props.form.validateFields(async (err, values) => {
       if (!err) {
         const res = await apis.login(values)
-        const { loginSuccess, history } = this.props;
-        loginSuccess(res);
-        history.push('/');
+        if (res.code === 1) {
+          const { loginSuccess, history } = this.props;
+          loginSuccess(res.data);
+          history.push('/');
+        }
       }
     });
   };
@@ -34,7 +36,7 @@ class NormalLoginForm extends Component {
         <Form onSubmit={this.handleSubmit} className={styles['login-form']}>
           <p className={styles.title}>问卷调查系统</p>
           <Form.Item>
-            {getFieldDecorator('userName', {
+            {getFieldDecorator('account', {
               rules: [{ required: true, message: '请输入用户名' }],
             })(
               <Input
@@ -71,5 +73,5 @@ class NormalLoginForm extends Component {
 const WrappedNormalLoginForm = Form.create({ name: 'normal_login' })(NormalLoginForm);
 
 export default connect(state => state, actions)((state) => (
-  <WrappedNormalLoginForm {...state}/>  
+  <WrappedNormalLoginForm {...state}/>
 ));

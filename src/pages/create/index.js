@@ -1,7 +1,8 @@
 import React, {Component } from 'react';
-import { Card, List, Typography, Radio, Checkbox, Input, Icon, Button, Tooltip } from 'antd';
+import { Card, List, Typography, Radio, Checkbox, Input, Icon, Button, Tooltip, message } from 'antd';
 import { connect } from "unistore/react";
-import { actions } from '../../service/store';
+import { actions } from '@/service/store';
+import apis from '@/service/api';
 import styles from './index.less';
 
 const { Paragraph, Title } = Typography;
@@ -11,13 +12,13 @@ class CreatePage extends Component {
     super(props);
     this.state = {
       formTitle: '标题',
-      formList: [],
+      questionList: [],
     };
   }
 
   //  添加表单项
   addForm = (type) => {
-    const { formList } = this.state;
+    const { questionList } = this.state;
     const form = {
       title: '标题',
       type,
@@ -27,27 +28,27 @@ class CreatePage extends Component {
         value: '选项2'
       }],
     }
-    formList.push(form);
+    questionList.push(form);
     this.setState({
-      formList,
+      questionList,
     });
   }
 
   // 添加表单选项
   addOption = (formIndex) => {
-    const { formList } = this.state;
-    formList[formIndex].options.push({value: '新增选项'});
+    const { questionList } = this.state;
+    questionList[formIndex].options.push({value: '新增选项'});
     this.setState({
-      formList,
+      questionList,
     });
   }
 
   // 删除表单选项
   deleteOption = (formIndex, optionIndex) => {
-    const { formList } = this.state;
-    formList[formIndex].options.splice(optionIndex, 1);
+    const { questionList } = this.state;
+    questionList[formIndex].options.splice(optionIndex, 1);
     this.setState({
-      formList,
+      questionList,
     });
   }
 
@@ -60,38 +61,67 @@ class CreatePage extends Component {
 
   // 修改表单标题
   changeTitle = (value, index) => {
-    const { formList } = this.state;
-    formList[index].title = value;
+    const { questionList } = this.state;
+    questionList[index].title = value;
     this.setState({
-      formList,
+      questionList,
     });
   }
 
   // 修改表单选项
   changeOption = (value, formIndex, optionIndex) => {
-    const { formList } = this.state;
-    formList[formIndex].options[optionIndex].value = value;
+    const { questionList } = this.state;
+    questionList[formIndex].options[optionIndex].value = value;
     this.setState({
-      formList,
+      questionList,
     });
   }
   // 删除表单项
   deleteItem = (index) => {
-    const { formList } = this.state;
-    formList.splice(index, 1);
+    const { questionList } = this.state;
+    questionList.splice(index, 1);
     this.setState({
-      formList,
+      questionList,
     });
   }
 
+  // 提交表单信息
+  submit = async () => {
+    const { userInfo } = this.props;
+    const { formTitle, questionList } = this.state;
+    const params = {
+      userId: userInfo.userId,
+      title: formTitle,
+      questions: questionList.map((item, questionIndex) => {
+        return {
+          ...item,
+          id: questionIndex + 1,
+          options: item.options.map((option, index) => {
+            return {
+              ...option,
+              id: index + 1,
+            };
+          }),
+        };
+      })
+    }
+    const res = await apis.createForm(params);
+    if (res.code === 1) {
+      message.success('创建成功');
+      const { history } = this.props;
+      setTimeout(() => {
+        history.push('/');
+      }, 500)
+    }
+  }
   // 渲染定义好的模板问卷
   renderTemplate = (index) => {
     let formTitle = '问卷标题';
-    let formList = [];
+    let questionList = [];
     switch(index) {
       case 0:
         formTitle = '中小学家庭教育现状调查问卷';
-        formList = [{
+        questionList = [{
           title: '您的身份',
           type: 'radio',
           options: [{
@@ -122,9 +152,9 @@ class CreatePage extends Component {
           }],
         }];
         break;
-      case 1: 
+      case 1:
       formTitle = '大学城民宿市场需求调查';
-      formList = [{
+      questionList = [{
         title: '您的性别',
         type: 'radio',
         options: [{
@@ -165,12 +195,12 @@ class CreatePage extends Component {
 
     this.setState({
       formTitle,
-      formList,
+      questionList,
     })
   }
 
   render() {
-    const { formList, formTitle } = this.state;
+    const { questionList, formTitle } = this.state;
     return (
       <div className={styles.normal}>
         <div className={styles.left}>
@@ -189,7 +219,7 @@ class CreatePage extends Component {
           <Card>
             <List
               itemLayout="horizontal"
-              dataSource={formList}
+              dataSource={questionList}
               renderItem={(item, formIndex) => (
                 <List.Item actions={[<span className="link" onClick={() => this.deleteItem(formIndex)}>删除</span>]}>
                   <List.Item.Meta
@@ -203,7 +233,7 @@ class CreatePage extends Component {
                         {
                           item.type === 'input'
                           ? (<Input disabled style={{width: 200}} />)
-                          : 
+                          :
                           item.options.map((option, optionIndex) => {
                             return (
                               <div key={optionIndex} className={styles.options}>
@@ -233,6 +263,14 @@ class CreatePage extends Component {
               )}
               />
           </Card>
+          <div className={styles.submit}>
+            {
+              questionList.length > 0
+              ?
+              <Button type="primary" onClick={this.submit}>完成</Button>
+              : null
+            }
+          </div>
         </div>
       </div>
     );
@@ -240,5 +278,5 @@ class CreatePage extends Component {
 }
 
 export default connect(state => state, actions)((state) => (
-  <CreatePage {...state}/>  
+  <CreatePage {...state}/>
 ));

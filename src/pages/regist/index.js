@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message } from 'antd';
 import { connect } from "unistore/react";
-import { actions } from '../../service/store';
+import { actions } from '@/service/store';
+import apis from '@/service/api';
 import styles from './index.less';
 
 class RegistrationForm extends Component {
@@ -11,10 +12,18 @@ class RegistrationForm extends Component {
 
   // 注册
   handleSubmit = e => {
+    const { history } = this.props;
     e.preventDefault();
-    this.props.form.validateFieldsAndScroll((err, values) => {
+    this.props.form.validateFieldsAndScroll(async (err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+        const res = await apis.regist(values)
+        if (res.code === 1) {
+          message.success('注册成功,请登录');
+          setTimeout(() => {
+            history.push('/login');
+          }, 500)
+        }
       }
     });
   };
@@ -78,7 +87,7 @@ class RegistrationForm extends Component {
         <Form {...formItemLayout} onSubmit={this.handleSubmit} className={styles['regist-form']}>
           <p className={styles.title}>用户注册</p>
           <Form.Item label="用户名">
-            {getFieldDecorator('nickname', {
+            {getFieldDecorator('account', {
               rules: [{ required: true, message: '请输入用户名', whitespace: true }],
             })(<Input />)}
           </Form.Item>
@@ -109,7 +118,7 @@ class RegistrationForm extends Component {
             })(<Input.Password onBlur={this.handleConfirmBlur} />)}
           </Form.Item>
           <Form.Item label="手机号">
-            {getFieldDecorator('phone', {
+            {getFieldDecorator('tel', {
               rules: [{ required: true, message: '请输入手机号' }],
             })(<Input style={{ width: '100%' }} />)}
           </Form.Item>
@@ -142,5 +151,5 @@ class RegistrationForm extends Component {
 const WrappedRegistrationForm = Form.create({ name: 'register' })(RegistrationForm);
 
 export default connect(state => state, actions)((state) => (
-  <WrappedRegistrationForm {...state}/>  
+  <WrappedRegistrationForm {...state}/>
 ));

@@ -1,13 +1,49 @@
 import React, { Component } from 'react';
-import { Button, List, Card, Popconfirm, Typography } from 'antd';
+import { Button, List, Card, Popconfirm, Typography, message } from 'antd';
 import { connect } from "unistore/react";
-import { actions } from '../service/store';
+import { actions } from '@/service/store';
+import apis from '@/service/api';
 import styles from './index.less';
 
 const { Paragraph } = Typography;
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      formList: [],
+    }
+  }
+  componentDidMount = () =>  {
+    this.queryData();
+  }
 
+  // 获取表单数据
+  queryData = async () => {
+    const { userInfo } = this.props;
+    const params = {
+      userId: userInfo.userId,
+    }
+    const res = await apis.getFormList(params);
+    if (res.code === 1) {
+      this.setState({
+        formList: res.data || [],
+      });
+    }
+  }
+
+  deleteForm = async (formId) => {
+    const params = {
+      formId,
+    }
+    const res = await apis.deleteForm(params);
+    console.log('res=', res);
+    if (res.code === 1) {
+      message.success('删除成功');
+      this.queryData();
+    }
+
+  }
   // 跳转到创建页面
   jumpToCreate = () => {
     const { history } = this.props;
@@ -22,22 +58,15 @@ class HomePage extends Component {
 
   render() {
     const serviceUrl = this.props.serviceUrl;
-    const data = [{
-      id: '100010',
-      title: '问卷调查1',
-    }, {
-      id: '100011',
-      title: '问卷调查2',
-    }, {
-      id: '100012',
-      title: '问卷调查3',
-    }]
+    const { formList } = this.state;
     const getBtnActions = (item) => {
       return [
-        <span className="link" onClick={() => this.jumpToReport(item.id)}>分析&下载</span>,
+        <span className="link" onClick={() => this.jumpToReport(item.formId)}>分析&下载</span>,
         <Popconfirm
           title="确认删除?"
-          onConfirm={() => {}}
+          onConfirm={() => {
+            this.deleteForm(item.formId);
+          }}
           okText="是"
           cancelText="否"
         >
@@ -54,15 +83,15 @@ class HomePage extends Component {
           <Card>
             <List
               itemLayout="horizontal"
-              dataSource={data}
+              dataSource={formList}
               renderItem={item => (
                 <List.Item actions={getBtnActions(item)}>
                   <List.Item.Meta
                     title={<span className={styles.title}>{item.title}</span>}
                     description={(
                       <div className={styles.desc}>
-                        <div><span className={styles.field}>ID: </span>10010</div>
-                        <div><Paragraph copyable={{ text: `${serviceUrl}/fill/${item.id}` }}><span className={styles.field}>发布地址:</span>{serviceUrl}/fill/{item.id}</Paragraph></div>
+                        <div><span className={styles.field}>ID: </span>{item.formId}</div>
+                        <div><Paragraph copyable={{ text: `${serviceUrl}/fill/${item.formId}` }}><span className={styles.field}>发布地址:</span>{serviceUrl}/fill/{item.formId}</Paragraph></div>
                       </div>
                     )}
                     />
@@ -77,5 +106,5 @@ class HomePage extends Component {
 }
 
 export default connect(state => state, actions)((state) => (
-  <HomePage {...state}/>  
+  <HomePage {...state}/>
 ));

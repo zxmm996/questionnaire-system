@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { List, Progress, Table, Icon, Tooltip } from 'antd';
 import { connect } from "unistore/react";
-import { actions } from '../../service/store';
+import { actions } from '@/service/store';
+import apis from '@/service/api';
 import styles from './index.less';
 
 const typeMapper = {
@@ -15,32 +16,29 @@ class ReportPage extends Component {
     super(props);
     this.state = {
       formTitle: '标题',
-      formList: [{
-        title: '标题',
-        type: 'radio',
-        options: [{
-          value: '选项1'
-        }, {
-          value: '选项2'
-        }]
-      }, {
-        title: '标题',
-        type: 'checkbox',
-        options: [{
-          value: '选项1'
-        }, {
-          value: '选项2'
-        }],
-      }, {
-        title: '标题',
-        type: 'input',
-      }],
+      questions: [],
     };
   }
 
+  componentDidMount = async () =>  {
+    const { match } = this.props;
+
+    const params = {
+      formId: match.params.id,
+    }
+    const res = await apis.getFormDetail(params);
+    console.log('res=', res);
+    if (res.code === 1) {
+      this.setState({
+        formTitle: res.data.title,
+        questions: res.data.questions,
+        answers:  res.data.answers,
+      });
+    }
+  }
   render() {
-    const { formTitle, formList } = this.state;
-   
+    const { formTitle, questions, answers } = this.state;
+
     return (
       <div className={styles.wrapper}>
         <div className={styles.header} />
@@ -52,36 +50,39 @@ class ReportPage extends Component {
           <List
             style={{padding: '10px 50px'}}
             itemLayout="horizontal"
-            dataSource={formList}
+            dataSource={questions}
             renderItem={(item, formIndex) => {
               let dataSource = [];
               let columns = [];
               if (item.type === 'input') {
-                dataSource = [{
-                  answer: '我在哪'
-                }, {
-                  answer: '我是谁'
-                }];
+                answers.forEach(answer => {
+                  dataSource.push(answer.find(obj => obj.id === item.id));
+                })
                 columns = [{
                   title: '序号',
                   key: 'order',
                   dataIndex: 'order',
-                  render: (text, record, index) => index + 1, 
+                  render: (text, record, index) => index + 1,
                 }, {
                   title: '答案文本',
                   key: 'answer',
                   dataIndex: 'answer',
                 }];
-              } else {
-                dataSource = [{
-                  option: '选项1',
-                  count: 1,
-                  rate: 10,
-                }, {
-                  option: '选项2',
-                  count: 2,
-                  rate: 60,
-                }];
+              } else if (item.type === 'radio') {
+                dataSource = item.options.map(option => {
+                  const list = [];
+                  answers.forEach(answer => {
+                    list.push(answer.find(obj => obj.id === item.id))
+                  });
+                  const result = list.filter(obj => obj.answer === option.id);
+
+                  const count = result.length;
+                  return {
+                    option: option.value,
+                    count,
+                    rate: (count / (answers.length) * 100).toFixed(2),
+                  }
+                })
                 columns = [{
                   title: '选项',
                   key: 'option',
@@ -96,7 +97,41 @@ class ReportPage extends Component {
                   dataIndex: 'rate',
                   render: (text) => {
                     return (
-                      <Progress percent={text} />
+                      <Progress percent={parseFloat(text)} status="normal" />
+                    )
+                  },
+                }];
+              } else if (item.type === 'checkbox') {
+                dataSource = item.options.map(option => {
+                  const list = [];
+                  answers.forEach(answer => {
+                    list.push(answer.find(obj => obj.id === item.id))
+                  });
+                  console.log('list=', list);
+                  const result = list.filter(obj => obj.answer.indexOf(option.id) > -1);
+                  console.log('result=', result);
+                  const count = result.length;
+                  return {
+                    option: option.value,
+                    count,
+                    rate: (count / (answers.length) * 100).toFixed(2),
+                  }
+                })
+                columns = [{
+                  title: '选项',
+                  key: 'option',
+                  dataIndex: 'option',
+                }, {
+                  title: '小记',
+                  key: 'count',
+                  dataIndex: 'count',
+                }, {
+                  title: '比例',
+                  key: 'rate',
+                  dataIndex: 'rate',
+                  render: (text) => {
+                    return (
+                      <Progress percent={parseFloat(text)} status="normal" />
                     )
                   },
                 }];
@@ -124,5 +159,5 @@ class ReportPage extends Component {
 }
 
 export default connect(state => state, actions)((state) => (
-  <ReportPage {...state}/>  
+  <ReportPage {...state}/>
 ));

@@ -27,6 +27,7 @@ const codeMessage = {
  * 异常处理程序
  */
 const errorHandler = error => {
+  console.log('error=', error);
   const { response = {} } = error;
   const errortext = codeMessage[response.status] || response.statusText;
   const { status, url } = response;
@@ -42,7 +43,8 @@ const errorHandler = error => {
  */
 const request = extend({
   errorHandler, // 默认错误处理
-  credentials: 'include', // 默认请求是否带上cookie
+  // credentials: 'include', // 默认请求是否带上cookie
+  prefix: 'http://192.168.1.8:3000', // 默认url前缀
 });
 
 export default request;

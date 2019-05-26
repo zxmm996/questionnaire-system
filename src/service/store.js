@@ -35,7 +35,7 @@ let actions = store => ({
       userInfo: {},
     };
   },
-  
+
   // The above example as an Arrow Function:
   increment2: ({ count }) => ({ count: count + 1 }),
 
