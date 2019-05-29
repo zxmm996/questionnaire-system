@@ -7,7 +7,7 @@ import request from './request';
  * @returns {Promise}
  */
 async function regist(data) {
-  return await request('/regist', {
+  return await request('/test/reg', {
     method: 'post',
     data,
   });
@@ -20,7 +20,7 @@ async function regist(data) {
  * @returns {Promise}
  */
 async function login(data) {
-  return await request('/login', {
+  return await request('/test/login', {
     method: 'post',
     data,
   });

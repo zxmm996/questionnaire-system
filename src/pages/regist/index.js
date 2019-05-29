@@ -87,12 +87,12 @@ class RegistrationForm extends Component {
         <Form {...formItemLayout} onSubmit={this.handleSubmit} className={styles['regist-form']}>
           <p className={styles.title}>用户注册</p>
           <Form.Item label="用户名">
-            {getFieldDecorator('account', {
+            {getFieldDecorator('user_name', {
               rules: [{ required: true, message: '请输入用户名', whitespace: true }],
             })(<Input />)}
           </Form.Item>
           <Form.Item label="密码" hasFeedback>
-            {getFieldDecorator('password', {
+            {getFieldDecorator('user_pwd', {
               rules: [
                 {
                   required: true,
@@ -118,12 +118,12 @@ class RegistrationForm extends Component {
             })(<Input.Password onBlur={this.handleConfirmBlur} />)}
           </Form.Item>
           <Form.Item label="手机号">
-            {getFieldDecorator('tel', {
+            {getFieldDecorator('user_phone', {
               rules: [{ required: true, message: '请输入手机号' }],
             })(<Input style={{ width: '100%' }} />)}
           </Form.Item>
           <Form.Item label="邮箱">
-            {getFieldDecorator('email', {
+            {getFieldDecorator('user_email', {
               rules: [
                 {
                   type: 'email',
