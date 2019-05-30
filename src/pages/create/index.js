@@ -16,6 +16,170 @@ class CreatePage extends Component {
     };
   }
 
+  // 预定义的表单模板数据
+  template = [{
+    formTitle: '2019潜力篮球暑期班报名表',
+    questionList: [{
+      title: '孩子姓名',
+      type: 'input',
+    }, {
+      title: '孩子性别',
+      type: 'radio',
+      options: [{
+        value: '男'
+      }, {
+        value: '女'
+      }],
+    }, {
+      title: '篮球水平',
+      type: 'radio',
+      options: [{
+        value: '无基础'
+      }, {
+        value: '有一定基础'
+      }, {
+        value: '基础较好'
+      }, {
+        value: '学校校队及以上水平'
+      }],
+    }, {
+      title: '是否已是潜力俱乐部学员',
+      type: 'radio',
+      options: [{
+        value: '是'
+      }, {
+        value: '否'
+      }],
+    }, {
+      title: '暑期班时间段及地点',
+      type: 'checkbox',
+      options: [{
+        value: '7月2日-7月7日 工程大西篮球场 08:00-10:00'
+      }, {
+        value: '7月2日-7月7日 工程大东篮球场 18:30-20:30'
+      }, {
+        value: '7月20日-7月25日 视觉体育馆 09:45-11:45'
+      }, {
+        value: '7月20日-7月25日 工程大东篮球场 18:30-20:30'
+      }, {
+        value: '7月26日-7月31日 视觉体育馆 09:45-11:45'
+      }, {
+        value: '7月26日-7月31日 工程大东篮球场 18:30-20:30'
+      }],
+    }, {
+      title: '家长姓名',
+      type: 'input',
+    }, {
+      title: '联系方式',
+      type: 'input',
+    }, {
+      title: '需要说明的情况（如身体的特殊情况、性格上等需要特别说明的事项；如果没有，请填写“无”）',
+      type: 'input',
+    }]
+  }, {
+    formTitle: '大学生旅游情况调查',
+    questionList: [{
+      title: '您的性别',
+      type: 'radio',
+      options: [{
+        value: '男'
+      }, {
+        value: '女'
+      }],
+    }, {
+      title: '您所在的年级',
+      type: 'radio',
+      options: [{
+        value: '大一'
+      }, {
+        value: '大二'
+      }, {
+        value: '大三'
+      }, {
+        value: '大四'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您一个月的生活费是',
+      type: 'radio',
+      options: [{
+        value: '1000元以下'
+      }, {
+        value: '1000元 - 1500元'
+      }, {
+        value: '1500元以上'
+      }],
+    }, {
+      title: '您一般会选择哪种旅游方式',
+      type: 'radio',
+      options: [{
+        value: '随团游'
+      }, {
+        value: '自助游'
+      }, {
+        value: '与朋友同行'
+      }, {
+        value: '独自出游'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您一般会选择什么时间出游',
+      type: 'radio',
+      options: [{
+        value: '寒暑假'
+      }, {
+        value: '法定节假日'
+      }, {
+        value: '周末'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您都是从哪些渠道了解到旅游的相关信息呢',
+      type: 'checkbox',
+      options: [{
+        value: '旅行社'
+      }, {
+        value: '宣传海报'
+      }, {
+        value: '朋友介绍'
+      }, {
+        value: '新媒体推广信息'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您喜欢去哪旅游',
+      type: 'radio',
+      options: [{
+        value: '省内'
+      }, {
+        value: '省外'
+      }, {
+        value: '出国'
+      }],
+    }, {
+      title: '您一般出游的目的是什么',
+      type: 'checkbox',
+      options: [{
+        value: '娱乐身心，放松自我'
+      }, {
+        value: '结交朋友，增加人脉'
+      }, {
+        value: '探亲访友，加强联系'
+      }, {
+        value: '拍照摄影，看看祖国大好河山'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您对大学生外出旅游有什么好的建议',
+      type: 'input',
+    }]
+  }]
+
   //  添加表单项
   addForm = (type) => {
     const { questionList } = this.state;
@@ -115,83 +279,7 @@ class CreatePage extends Component {
     }
   }
   // 渲染定义好的模板问卷
-  renderTemplate = (index) => {
-    let formTitle = '问卷标题';
-    let questionList = [];
-    switch(index) {
-      case 0:
-        formTitle = '中小学家庭教育现状调查问卷';
-        questionList = [{
-          title: '您的身份',
-          type: 'radio',
-          options: [{
-            value: '父亲'
-          }, {
-            value: '母亲'
-          }],
-        }, {
-          title: '您孩子的性别',
-          type: 'radio',
-          options: [{
-            value: '男'
-          }, {
-            value: '女'
-          }],
-        },  {
-          title: '您孩子的姓名',
-          type: 'input',
-        }, {
-          title: '您孩子的爱好',
-          type: 'checkbox',
-          options: [{
-            value: '篮球'
-          }, {
-            value: '羽毛球'
-          }, {
-            value: '乒乓球'
-          }],
-        }];
-        break;
-      case 1:
-      formTitle = '大学城民宿市场需求调查';
-      questionList = [{
-        title: '您的性别',
-        type: 'radio',
-        options: [{
-          value: '男'
-        }, {
-          value: '女'
-        }],
-      }, {
-        title: '您现在读大几',
-        type: 'radio',
-        options: [{
-          value: '大一'
-        }, {
-          value: '大二'
-        },  {
-          value: '大三'
-        },  {
-          value: '大四'
-        }],
-      },  {
-        title: '您认为最佳的选址是哪里',
-        type: 'input',
-      }, {
-        title: '您在选择住宿时关注的因素',
-        type: 'checkbox',
-        options: [{
-          value: '价格'
-        }, {
-          value: '卫生质量'
-        }, {
-          value: '服务态度'
-        }],
-      }];
-      break;
-      default:
-        break;
-    }
+  renderTemplate = ({formTitle, questionList}) => {
 
     this.setState({
       formTitle,
@@ -209,8 +297,13 @@ class CreatePage extends Component {
           <p className={styles.item} onClick={() => this.addForm('radio')}>单项选择</p>
           <p className={styles.item} onClick={() => this.addForm('checkbox')}>多项选择</p>
           <p className={styles.title}>模板</p>
-          <p className={styles.item} onClick={() => this.renderTemplate(0)}>模板1</p>
-          <p className={styles.item} onClick={() => this.renderTemplate(1)}>模板2</p>
+          {
+            this.template.map((item, index) => {
+              return (
+                <p className={styles.item} key={index} onClick={() => this.renderTemplate(item)}>{item.formTitle}</p>
+              );
+            })
+          }
         </div>
         <div className={styles.right}>
           <Title level={4} style={{textAlign: 'center'}}>

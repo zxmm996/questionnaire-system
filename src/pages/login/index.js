@@ -36,7 +36,7 @@ class NormalLoginForm extends Component {
         <Form onSubmit={this.handleSubmit} className={styles['login-form']}>
           <p className={styles.title}>问卷调查系统</p>
           <Form.Item>
-            {getFieldDecorator('user_name', {
+            {getFieldDecorator('account', {
               rules: [{ required: true, message: '请输入用户名' }],
             })(
               <Input
@@ -46,7 +46,7 @@ class NormalLoginForm extends Component {
             )}
           </Form.Item>
           <Form.Item>
-            {getFieldDecorator('user_pwd', {
+            {getFieldDecorator('password', {
               rules: [{ required: true, message: '请输入密码' }],
             })(
               <Input
