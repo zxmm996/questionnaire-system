@@ -3,7 +3,7 @@
  * 更详细的 api 文档: https://github.com/umijs/umi-request
  */
 import { extend } from 'umi-request';
-import { notification } from 'antd';
+import { notification, message } from 'antd';
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -44,7 +44,16 @@ const errorHandler = error => {
 const request = extend({
   errorHandler, // 默认错误处理
   // credentials: 'include', // 默认请求是否带上cookie
-  prefix: 'http://192.168.1.8:3000', // 默认url前缀
+  prefix: 'http://localhost:3000', // 默认url前缀
 });
+
+
+request.interceptors.response.use(async (response) => {
+  const data = await response.clone().json();
+  if(data.code === 0 ) {
+    message.error(data.msg);
+  }
+  return response;
+})
 
 export default request;

@@ -16,6 +16,68 @@ class CreatePage extends Component {
     };
   }
 
+  // 预定义的表单模板数据
+  template = [{
+    formTitle: '2019潜力篮球暑期班报名表',
+    questionList: [{
+      title: '孩子姓名',
+      type: 'input',
+    }, {
+      title: '孩子性别',
+      type: 'radio',
+      options: [{
+        value: '男'
+      }, {
+        value: '女'
+      }],
+    }, {
+      title: '篮球水平',
+      type: 'radio',
+      options: [{
+        value: '无基础'
+      }, {
+        value: '有一定基础'
+      }, {
+        value: '基础较好'
+      }, {
+        value: '学校校队及以上水平'
+      }],
+    }, {
+      title: '是否已是潜力俱乐部学员',
+      type: 'radio',
+      options: [{
+        value: '是'
+      }, {
+        value: '否'
+      }],
+    }, {
+      title: '暑期班时间段及地点',
+      type: 'checkbox',
+      options: [{
+        value: '7月2日-7月7日 工程大西篮球场 08:00-10:00'
+      }, {
+        value: '7月2日-7月7日 工程大东篮球场 18:30-20:30'
+      }, {
+        value: '7月20日-7月25日 视觉体育馆 09:45-11:45'
+      }, {
+        value: '7月20日-7月25日 工程大东篮球场 18:30-20:30'
+      }, {
+        value: '7月26日-7月31日 视觉体育馆 09:45-11:45'
+      }, {
+        value: '7月26日-7月31日 工程大东篮球场 18:30-20:30'
+      }],
+    }, {
+      title: '家长姓名',
+      type: 'input',
+    }, {
+      title: '联系方式',
+      type: 'input',
+    }, {
+      title: '需要说明的情况（如身体的特殊情况、性格上等需要特别说明的事项；如果没有，请填写“无”）',
+      type: 'input',
+    }]
+  }]
+
   //  添加表单项
   addForm = (type) => {
     const { questionList } = this.state;
@@ -115,83 +177,7 @@ class CreatePage extends Component {
     }
   }
   // 渲染定义好的模板问卷
-  renderTemplate = (index) => {
-    let formTitle = '问卷标题';
-    let questionList = [];
-    switch(index) {
-      case 0:
-        formTitle = '中小学家庭教育现状调查问卷';
-        questionList = [{
-          title: '您的身份',
-          type: 'radio',
-          options: [{
-            value: '父亲'
-          }, {
-            value: '母亲'
-          }],
-        }, {
-          title: '您孩子的性别',
-          type: 'radio',
-          options: [{
-            value: '男'
-          }, {
-            value: '女'
-          }],
-        },  {
-          title: '您孩子的姓名',
-          type: 'input',
-        }, {
-          title: '您孩子的爱好',
-          type: 'checkbox',
-          options: [{
-            value: '篮球'
-          }, {
-            value: '羽毛球'
-          }, {
-            value: '乒乓球'
-          }],
-        }];
-        break;
-      case 1:
-      formTitle = '大学城民宿市场需求调查';
-      questionList = [{
-        title: '您的性别',
-        type: 'radio',
-        options: [{
-          value: '男'
-        }, {
-          value: '女'
-        }],
-      }, {
-        title: '您现在读大几',
-        type: 'radio',
-        options: [{
-          value: '大一'
-        }, {
-          value: '大二'
-        },  {
-          value: '大三'
-        },  {
-          value: '大四'
-        }],
-      },  {
-        title: '您认为最佳的选址是哪里',
-        type: 'input',
-      }, {
-        title: '您在选择住宿时关注的因素',
-        type: 'checkbox',
-        options: [{
-          value: '价格'
-        }, {
-          value: '卫生质量'
-        }, {
-          value: '服务态度'
-        }],
-      }];
-      break;
-      default:
-        break;
-    }
+  renderTemplate = ({formTitle, questionList}) => {
 
     this.setState({
       formTitle,
@@ -209,8 +195,13 @@ class CreatePage extends Component {
           <p className={styles.item} onClick={() => this.addForm('radio')}>单项选择</p>
           <p className={styles.item} onClick={() => this.addForm('checkbox')}>多项选择</p>
           <p className={styles.title}>模板</p>
-          <p className={styles.item} onClick={() => this.renderTemplate(0)}>模板1</p>
-          <p className={styles.item} onClick={() => this.renderTemplate(1)}>模板2</p>
+          {
+            this.template.map((item, index) => {
+              return (
+                <p className={styles.item} key={index} onClick={() => this.renderTemplate(item)}>{item.formTitle}</p>
+              );
+            })
+          }
         </div>
         <div className={styles.right}>
           <Title level={4} style={{textAlign: 'center'}}>
