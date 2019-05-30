@@ -76,6 +76,108 @@ class CreatePage extends Component {
       title: '需要说明的情况（如身体的特殊情况、性格上等需要特别说明的事项；如果没有，请填写“无”）',
       type: 'input',
     }]
+  }, {
+    formTitle: '大学生旅游情况调查',
+    questionList: [{
+      title: '您的性别',
+      type: 'radio',
+      options: [{
+        value: '男'
+      }, {
+        value: '女'
+      }],
+    }, {
+      title: '您所在的年级',
+      type: 'radio',
+      options: [{
+        value: '大一'
+      }, {
+        value: '大二'
+      }, {
+        value: '大三'
+      }, {
+        value: '大四'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您一个月的生活费是',
+      type: 'radio',
+      options: [{
+        value: '1000元以下'
+      }, {
+        value: '1000元 - 1500元'
+      }, {
+        value: '1500元以上'
+      }],
+    }, {
+      title: '您一般会选择哪种旅游方式',
+      type: 'radio',
+      options: [{
+        value: '随团游'
+      }, {
+        value: '自助游'
+      }, {
+        value: '与朋友同行'
+      }, {
+        value: '独自出游'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您一般会选择什么时间出游',
+      type: 'radio',
+      options: [{
+        value: '寒暑假'
+      }, {
+        value: '法定节假日'
+      }, {
+        value: '周末'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您都是从哪些渠道了解到旅游的相关信息呢',
+      type: 'checkbox',
+      options: [{
+        value: '旅行社'
+      }, {
+        value: '宣传海报'
+      }, {
+        value: '朋友介绍'
+      }, {
+        value: '新媒体推广信息'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您喜欢去哪旅游',
+      type: 'radio',
+      options: [{
+        value: '省内'
+      }, {
+        value: '省外'
+      }, {
+        value: '出国'
+      }],
+    }, {
+      title: '您一般出游的目的是什么',
+      type: 'checkbox',
+      options: [{
+        value: '娱乐身心，放松自我'
+      }, {
+        value: '结交朋友，增加人脉'
+      }, {
+        value: '探亲访友，加强联系'
+      }, {
+        value: '拍照摄影，看看祖国大好河山'
+      }, {
+        value: '其他'
+      }],
+    }, {
+      title: '您对大学生外出旅游有什么好的建议',
+      type: 'input',
+    }]
   }]
 
   //  添加表单项
