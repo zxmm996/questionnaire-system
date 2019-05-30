@@ -119,7 +119,13 @@ class RegistrationForm extends Component {
           </Form.Item>
           <Form.Item label="手机号">
             {getFieldDecorator('tel', {
-              rules: [{ required: true, message: '请输入手机号' }],
+              rules: [{
+                required: true,
+                message: '请输入手机号',
+              }, {
+                pattern: /^1[34578]\d{9}$/,
+                message: '请填写正确的手机号',
+             }],
             })(<Input style={{ width: '100%' }} />)}
           </Form.Item>
           <Form.Item label="邮箱">
