@@ -36,6 +36,18 @@ class ReportPage extends Component {
       });
     }
   }
+
+  // 导出
+  export = async () => {
+    console.log('EXPORT');
+    const { match } = this.props;
+    const params = {
+      formId: match.params.id,
+    }
+    const res = await apis.exportForm(params);
+
+  }
+
   render() {
     const { formTitle, questions, answers } = this.state;
 
@@ -45,7 +57,9 @@ class ReportPage extends Component {
         <div className={styles.content}>
           <p className={styles['form-title']}>
             {formTitle}
-            <Tooltip placement="top" title="下载Excel"><Icon type="download" className={styles.download} /></Tooltip>
+            <Tooltip placement="top" title="下载Excel">
+              <Icon type="download" className={styles.download} onClick={this.export} />
+            </Tooltip>
           </p>
           <List
             style={{padding: '10px 50px'}}

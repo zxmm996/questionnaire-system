@@ -7,7 +7,7 @@ import request from './request';
  * @returns {Promise}
  */
 async function regist(data) {
-  return await request('/test/reg', {
+  return await request('/regist', {
     method: 'post',
     data,
   });
@@ -20,7 +20,7 @@ async function regist(data) {
  * @returns {Promise}
  */
 async function login(data) {
-  return await request('/test/login', {
+  return await request('/login', {
     method: 'post',
     data,
   });
@@ -91,6 +91,20 @@ async function fillForm(data) {
   });
 }
 
+
+/**
+ * 导出表单
+ *
+ * @param {Object} data
+ * @returns {Promise}
+ */
+async function exportForm(data) {
+  return await request('/export', {
+    method: 'post',
+    data,
+  });
+}
+
 export default {
   regist,
   login,
@@ -99,4 +113,5 @@ export default {
   deleteForm,
   getFormDetail,
   fillForm,
+  exportForm,
 };

@@ -44,7 +44,7 @@ const errorHandler = error => {
 const request = extend({
   errorHandler, // 默认错误处理
   // credentials: 'include', // 默认请求是否带上cookie
-  prefix: 'http://192.168.1.8:3000', // 默认url前缀
+  prefix: 'http://localhost:3000', // 默认url前缀
 });
 
 export default request;
