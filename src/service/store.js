@@ -35,16 +35,6 @@ let actions = store => ({
       userInfo: {},
     };
   },
-
-  // The above example as an Arrow Function:
-  increment2: ({ count }) => ({ count: count + 1 }),
-
-  // Async actions are actions that call store.setState():
-  incrementAsync(state) {
-    setTimeout(() => {
-      store.setState({ count: state.count + 1 });
-    }, 100);
-  }
 });
 
 export {

@@ -45,7 +45,9 @@ class ReportPage extends Component {
       formId: match.params.id,
     }
     const res = await apis.exportForm(params);
-
+    if (res.code === 1) {
+      window.location.href = res.data;
+    }
   }
 
   render() {
@@ -102,7 +104,7 @@ class ReportPage extends Component {
                   key: 'option',
                   dataIndex: 'option',
                 }, {
-                  title: '小记',
+                  title: '小计',
                   key: 'count',
                   dataIndex: 'count',
                 }, {
@@ -121,9 +123,7 @@ class ReportPage extends Component {
                   answers.forEach(answer => {
                     list.push(answer.find(obj => obj.id === item.id))
                   });
-                  console.log('list=', list);
                   const result = list.filter(obj => obj.answer.indexOf(option.id) > -1);
-                  console.log('result=', result);
                   const count = result.length;
                   return {
                     option: option.value,
@@ -136,7 +136,7 @@ class ReportPage extends Component {
                   key: 'option',
                   dataIndex: 'option',
                 }, {
-                  title: '小记',
+                  title: '小计',
                   key: 'count',
                   dataIndex: 'count',
                 }, {

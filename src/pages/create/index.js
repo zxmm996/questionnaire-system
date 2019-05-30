@@ -13,6 +13,7 @@ class CreatePage extends Component {
     this.state = {
       formTitle: '标题',
       questionList: [],
+      template: this.template,
     };
   }
 
@@ -192,9 +193,8 @@ class CreatePage extends Component {
         value: '选项2'
       }],
     }
-    questionList.push(form);
     this.setState({
-      questionList,
+      questionList: [...questionList, form],
     });
   }
 
@@ -260,7 +260,7 @@ class CreatePage extends Component {
         return {
           ...item,
           id: questionIndex + 1,
-          options: item.options.map((option, index) => {
+          options: item.options && item.options.map((option, index) => {
             return {
               ...option,
               id: index + 1,
@@ -288,7 +288,7 @@ class CreatePage extends Component {
   }
 
   render() {
-    const { questionList, formTitle } = this.state;
+    const { questionList, formTitle, template } = this.state;
     return (
       <div className={styles.normal}>
         <div className={styles.left}>
@@ -298,7 +298,7 @@ class CreatePage extends Component {
           <p className={styles.item} onClick={() => this.addForm('checkbox')}>多项选择</p>
           <p className={styles.title}>模板</p>
           {
-            this.template.map((item, index) => {
+            template.map((item, index) => {
               return (
                 <p className={styles.item} key={index} onClick={() => this.renderTemplate(item)}>{item.formTitle}</p>
               );
